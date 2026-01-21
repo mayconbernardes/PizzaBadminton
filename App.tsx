@@ -315,7 +315,14 @@ const App: React.FC = () => {
                   <li key={idx} className="flex items-center justify-center"><i className="fas fa-check-circle mr-3 text-red-200"></i> {incl}</li>
                 ))}
               </ul>
-              <div className="text-6xl font-black">{STUDENT_MENU.price}</div>
+              <div className="text-6xl font-black mb-10">{STUDENT_MENU.price}</div>
+              <button
+                onClick={() => addToCart(STUDENT_MENU)}
+                className="bg-white text-red-600 px-12 py-5 rounded-full font-black uppercase tracking-widest shadow-2xl hover:bg-gray-100 transition-all no-print transform hover:scale-105 active:scale-95 flex items-center space-x-3 mx-auto"
+              >
+                <i className="fas fa-shopping-cart text-2xl"></i>
+                <span>Ajouter au Panier</span>
+              </button>
             </div>
           </section>
         </main>

@@ -104,6 +104,7 @@ export const SPECIALTIES: SpecialtyItem[] = [
 ];
 
 export const STUDENT_MENU: MenuItem = {
+  id: 'menu-etudiant',
   name: 'MENU ÉTUDIANT',
   includes: ['1/2 Pizza au choix', '1 Boisson (33cl)', '1 Dessert'],
   price: '6.90 €'

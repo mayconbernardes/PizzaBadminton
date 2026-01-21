@@ -24,6 +24,7 @@ export interface SpecialtyItem {
 }
 
 export interface MenuItem {
+  id: string;
   name: string;
   includes: string[];
   price: string;
