@@ -80,7 +80,16 @@ const App: React.FC = () => {
     let message = `Bonjour! Je souhaite passer une commande:\n\n`;
     cart.forEach(item => {
       const sizeLabel = item.size === 'quarter' ? '1/4' : item.size === 'half' ? '1/2' : item.size === 'full' ? 'Entière' : '';
-      message += `• ${item.quantity}x ${item.name} ${sizeLabel ? `(${sizeLabel})` : ''} - ${formatPrice(item.price * item.quantity)}\n`;
+      let itemNote = '';
+
+      // Add "Choice Needed" note for specific items
+      if (item.name.toLowerCase().includes(' ou ')) {
+        itemNote = ' (À préciser: qual?)';
+      } else if (item.id === 'menu-etudiant') {
+        itemNote = ' (Précisez la pizza/boisson/dessert)';
+      }
+
+      message += `• ${item.quantity}x ${item.name} ${sizeLabel ? `(${sizeLabel})` : ''} - ${formatPrice(item.price * item.quantity)}${itemNote}\n`;
     });
     message += `\n*TOTAL: ${formatPrice(cartTotal)}*\n`;
     message += `\n🕒 *Heure de retrait: ${pickupTime}*`;
