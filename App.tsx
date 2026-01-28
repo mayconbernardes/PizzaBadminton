@@ -60,7 +60,7 @@ const App: React.FC = () => {
       const m = current % 60;
       const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
       slots.push(timeStr);
-      current += 15; // 15-minute intervals
+      current += 5; // 5-minute intervals
     }
     return slots;
   }, []);
