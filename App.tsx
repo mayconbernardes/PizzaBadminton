@@ -78,6 +78,11 @@ const App: React.FC = () => {
       return;
     }
 
+    if (pickupTime < "10:15" || pickupTime > "13:30") {
+      alert("La pizzaria est ouverte de 10h15 à 13h30. Veuillez choisir un horaire valide.");
+      return;
+    }
+
     let message = `Bonjour! Je souhaite passer une commande:\n\n`;
     cart.forEach(item => {
       const sizeLabel = item.size === 'quarter' ? '1/4' : item.size === 'half' ? '1/2' : item.size === 'full' ? 'Entière' : '';
@@ -103,6 +108,11 @@ const App: React.FC = () => {
     if (cart.length === 0) return;
     if (!pickupTime) {
       alert("Veuillez choisir une heure de retrait.");
+      return;
+    }
+
+    if (pickupTime < "10:15" || pickupTime > "13:30") {
+      alert("La pizzaria est ouverte de 10h15 à 13h30. Veuillez choisir un horaire valide.");
       return;
     }
 
@@ -194,11 +204,14 @@ const App: React.FC = () => {
                   <input
                     type="time"
                     value={pickupTime}
+                    min="10:15"
+                    max="13:30"
                     onChange={(e) => setPickupTime(e.target.value)}
                     className="w-full p-4 rounded-xl border-2 border-gray-300 bg-white text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-100 outline-none transition-all font-black text-2xl text-center"
                     style={{ colorScheme: 'light' }}
                     required
                   />
+                  <p className="text-center text-xs text-gray-500 mt-2">Disponível apenas entre 10:15 e 13:30</p>
                 </div>
 
                 <div className="flex justify-between items-center text-2xl font-black mb-4 px-2 text-gray-900">
