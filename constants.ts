@@ -58,9 +58,17 @@ export const PIZZAS: PizzaItem[] = [
     prices: { quarter: '2.50 €', half: '4.80 €', full: '9.50 €' }
   },
   {
-    id: 'lardons-savoyarde',
-    name: 'Lardons ou Savoyarde',
-    description: 'Pommes de terre, lardons fumés et fromage fondant.',
+    id: 'lardon',
+    name: 'La Lardon',
+    description: 'Base crème fraîche, lardons et fromage.',
+    isCreamBase: true,
+    prices: { quarter: '2.50 €', half: '4.80 €', full: '9.50 €' }
+  },
+  {
+    id: 'savoyarde',
+    name: 'Savoyarde',
+    description: 'Base crème fraîche, lardons, reblochon et fromage.',
+    isCreamBase: true,
     prices: { quarter: '2.50 €', half: '4.80 €', full: '9.50 €' }
   },
   {
@@ -95,10 +103,17 @@ export const PIZZAS: PizzaItem[] = [
 
 export const SPECIALTIES: SpecialtyItem[] = [
   {
-    id: 'panuozzo-chausson',
-    name: 'Panuozzo ou Chausson',
+    id: 'panuozzo',
+    name: 'Panuozzo (Poulet Crispy ou Bagnat)',
     price: '4.90 €',
-    description: 'Sandwich italien traditionnel fait avec de la pâte à pizza, garni selon vos envies.',
+    description: 'Sandwich italien traditionnel. Choix entre Poulet Crispy ou Bagnat.',
+    image: '/Panuozzo.jpg'
+  },
+  {
+    id: 'chausson',
+    name: 'Chausson',
+    price: '4.90 €',
+    description: 'Le chausson selon les goûts affichés.',
     image: '/Panuozzo.jpg'
   }
 ];

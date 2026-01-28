@@ -5,6 +5,7 @@ import { PizzaSize, CartItem } from './types';
 
 // --- Constants & Helpers ---
 const PHONE_RAW = CONTACT_PHONE.replace(/\s/g, '').substring(1);
+const SMS_PHONE = CONTACT_PHONE.replace(/\s/g, '');
 const WHATSAPP_BASE_URL = `https://wa.me/33${PHONE_RAW}`;
 
 const formatPrice = (p: string | number) => {
@@ -98,6 +99,33 @@ const App: React.FC = () => {
     window.open(`${WHATSAPP_BASE_URL}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
+  const sendSmsOrder = () => {
+    if (cart.length === 0) return;
+    if (!pickupTime) {
+      alert("Veuillez choisir une heure de retrait.");
+      return;
+    }
+
+    let message = `Bonjour! Je souhaite passer une commande:\n\n`;
+    cart.forEach(item => {
+      const sizeLabel = item.size === 'quarter' ? '1/4' : item.size === 'half' ? '1/2' : item.size === 'full' ? 'Entière' : '';
+      let itemNote = '';
+
+      if (item.name.toLowerCase().includes(' ou ')) {
+        itemNote = ' (À préciser: qual?)';
+      } else if (item.id === 'menu-etudiant') {
+        itemNote = ' (Précisez la pizza/boisson/dessert)';
+      }
+
+      message += `• ${item.quantity}x ${item.name} ${sizeLabel ? `(${sizeLabel})` : ''} - ${formatPrice(item.price * item.quantity)}${itemNote}\n`;
+    });
+    message += `\n*TOTAL: ${formatPrice(cartTotal)}*\n`;
+    message += `\n🕒 *Heure de retrait: ${pickupTime}*`;
+    message += `\n\nMerci!`;
+
+    window.location.href = `sms:${SMS_PHONE}?&body=${encodeURIComponent(message)}`;
+  };
+
   const handleDownloadPdf = () => {
     const element = document.getElementById('menu-content');
     if (!element) return;
@@ -178,13 +206,22 @@ const App: React.FC = () => {
                   <span className="text-red-600">{formatPrice(cartTotal)}</span>
                 </div>
 
-                <button
-                  onClick={sendWhatsAppOrder}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl transition-all flex items-center justify-center space-x-3 transform active:scale-95"
-                >
-                  <i className="fab fa-whatsapp text-2xl"></i>
-                  <span>Passer commande</span>
-                </button>
+                <div className="grid grid-cols-1 gap-3">
+                  <button
+                    onClick={sendWhatsAppOrder}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-black uppercase tracking-widest shadow-lg transition-all flex items-center justify-center space-x-3 transform active:scale-95"
+                  >
+                    <i className="fab fa-whatsapp text-2xl"></i>
+                    <span>WhatsApp</span>
+                  </button>
+                  <button
+                    onClick={sendSmsOrder}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-black uppercase tracking-widest shadow-lg transition-all flex items-center justify-center space-x-3 transform active:scale-95"
+                  >
+                    <i className="fas fa-comment-dots text-2xl"></i>
+                    <span>SMS</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -202,21 +239,38 @@ const App: React.FC = () => {
           <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
         <div className="relative z-10 text-center text-white px-4 w-full max-w-4xl">
-          <h1 className="text-5xl md:text-8xl font-serif mb-4 tracking-tighter">PIZZA & SPÉCIALITÉS</h1>
-          <p className="text-xl md:text-2xl font-light tracking-widest uppercase mb-12">L'Artisanat à chaque part</p>
+          <h1 className="text-5xl md:text-8xl font-serif mb-4 tracking-tighter">Pizza Walter et Flo</h1>
+          <p className="text-xl md:text-2xl font-light tracking-widest uppercase mb-6">L'Artisanat à chaque part</p>
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl mb-12 inline-block">
+            <p className="text-lg md:text-xl font-bold uppercase tracking-wider mb-1">
+              <i className="far fa-clock mr-2 text-red-500"></i> 10h15 à 13h30
+            </p>
+            <p className="text-sm md:text-base font-medium opacity-90">
+              Lundi au Vendredi <span className="mx-2">•</span> Période Scolaire
+            </p>
+          </div>
 
           <div className="w-full max-w-sm mx-auto bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-xl">
             <p className="text-white font-bold uppercase tracking-widest mb-4">Commandez dès maintenant</p>
             <div className="flex flex-col space-y-3">
-              <a
-                href={WHATSAPP_BASE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center shadow-lg"
-              >
-                <i className="fab fa-whatsapp mr-3 text-2xl"></i>
-                Par WhatsApp
-              </a>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <a
+                  href={WHATSAPP_BASE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-4 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center shadow-lg text-sm"
+                >
+                  <i className="fab fa-whatsapp mr-2 text-xl"></i>
+                  WhatsApp
+                </a>
+                <a
+                  href={`sms:${SMS_PHONE}`}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-4 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center shadow-lg text-sm"
+                >
+                  <i className="fas fa-comment-dots mr-2 text-xl"></i>
+                  SMS
+                </a>
+              </div>
               <div className="text-sm text-gray-300 italic">Ou via votre panier ci-dessous</div>
             </div>
           </div>
@@ -228,7 +282,7 @@ const App: React.FC = () => {
         <main id="menu" className="flex-grow py-16 px-4 max-w-7xl mx-auto w-full">
 
           <div className="hidden block-print mb-12 text-center pt-8">
-            <h1 className="text-4xl font-serif text-gray-900 uppercase">PIZZA & SPÉCIALITÉS</h1>
+            <h1 className="text-4xl font-serif text-gray-900 uppercase">Pizza Walter et Flo</h1>
             <p className="text-gray-600 uppercase tracking-widest text-sm">Menu Artisanal</p>
             <div className="mt-4 text-red-600 font-bold text-xl">{CONTACT_PHONE}</div>
           </div>
@@ -341,7 +395,7 @@ const App: React.FC = () => {
       <footer className="bg-gray-900 text-white py-16 px-4 no-print pb-32 md:pb-16 border-t-8 border-red-600">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
           <div>
-            <h3 className="text-2xl font-serif mb-6 text-red-500 uppercase tracking-widest">Pizza & Spécialités</h3>
+            <h3 className="text-2xl font-serif mb-6 text-red-500 uppercase tracking-widest">Pizza Walter et Flo</h3>
             <p className="text-gray-400 leading-relaxed font-light">Le goût authentique d'une pizza artisanale cuite avec passion.</p>
           </div>
           <div>
@@ -349,9 +403,9 @@ const App: React.FC = () => {
               <i className="far fa-clock mr-3 text-red-500"></i> Horaires
             </h4>
             <div className="space-y-2 text-gray-400">
-              <p>Lundi - Samedi :</p>
-              <p className="font-bold text-white uppercase">11h30 - 14h00 | 18h30 - 22h00</p>
-              <p>Dimanche : Fermé</p>
+              <p>Lundi - Vendredi (Période Scolaire) :</p>
+              <p className="font-bold text-white uppercase">10h15 - 13h30</p>
+              <p>Week-end & Vacances : Fermé</p>
             </div>
           </div>
           <div>
@@ -380,6 +434,13 @@ const App: React.FC = () => {
         </button>
 
         {/* Floating WhatsApp Contact Button */}
+        <a
+          href={`sms:${SMS_PHONE}`}
+          className="bg-blue-500 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
+          title="Contactez-nous par SMS"
+        >
+          <i className="fas fa-comment-dots text-2xl"></i>
+        </a>
         <a
           href={WHATSAPP_BASE_URL}
           target="_blank"
