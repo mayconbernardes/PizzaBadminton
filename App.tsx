@@ -239,7 +239,7 @@ const App: React.FC = () => {
           <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         </div>
         <div className="relative z-10 text-center text-white px-4 w-full max-w-4xl">
-          <h1 className="text-5xl md:text-8xl font-serif mb-4 tracking-tighter">Pizza Walter et Flo</h1>
+          <h1 className="text-4xl md:text-8xl font-serif mb-4 tracking-tighter">Pizza Walter et Flo</h1>
           <p className="text-xl md:text-2xl font-light tracking-widest uppercase mb-6">L'Artisanat à chaque part</p>
           <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl mb-12 inline-block">
             <p className="text-lg md:text-xl font-bold uppercase tracking-wider mb-1">
