@@ -284,7 +284,9 @@ const App: React.FC = () => {
           <div className="hidden block-print mb-12 text-center pt-8">
             <h1 className="text-4xl font-serif text-gray-900 uppercase">Pizza Walter et Flo</h1>
             <p className="text-gray-600 uppercase tracking-widest text-sm">Menu Artisanal</p>
-            <div className="mt-4 text-red-600 font-bold text-xl">{CONTACT_PHONE}</div>
+            <div className="mt-4 text-red-600 font-bold text-xl">
+              <a href={`tel:${SMS_PHONE}`} className="hover:underline">{CONTACT_PHONE}</a>
+            </div>
           </div>
 
           {/* Pizza Section */}
@@ -412,7 +414,9 @@ const App: React.FC = () => {
             <h4 className="text-xl font-bold mb-6 flex items-center justify-center md:justify-start">
               <i className="fas fa-phone-alt mr-3 text-red-500"></i> Contact
             </h4>
-            <div className="text-3xl font-black text-red-500">{CONTACT_PHONE}</div>
+            <div className="text-3xl font-black text-red-500 hover:text-red-400 transition-colors">
+              <a href={`tel:${SMS_PHONE}`}>{CONTACT_PHONE}</a>
+            </div>
           </div>
         </div>
       </footer>
