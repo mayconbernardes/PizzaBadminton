@@ -49,6 +49,22 @@ const App: React.FC = () => {
   const [pickupTime, setPickupTime] = useState('');
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
+  // --- Generate Time Slots (10:15 to 13:30) ---
+  const timeSlots = useMemo(() => {
+    const slots = [];
+    let current = 10 * 60 + 15; // 10:15 in minutes
+    const end = 13 * 60 + 30; // 13:30 in minutes
+
+    while (current <= end) {
+      const h = Math.floor(current / 60);
+      const m = current % 60;
+      const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+      slots.push(timeStr);
+      current += 15; // 15-minute intervals
+    }
+    return slots;
+  }, []);
+
   // --- Cart Logic ---
   const addToCart = (item: any, size?: PizzaSize) => {
     const priceStr = size ? (item.prices as any)[size] : item.price;
@@ -218,16 +234,17 @@ const App: React.FC = () => {
                   <label className="block text-sm font-black text-gray-900 mb-2 uppercase tracking-widest">
                     <i className="far fa-clock mr-2 text-red-600"></i> Heure de retrait :
                   </label>
-                  <input
-                    type="time"
+                  <select
                     value={pickupTime}
-                    min="10:15"
-                    max="13:30"
                     onChange={(e) => setPickupTime(e.target.value)}
-                    className="w-full p-4 rounded-xl border-2 border-gray-300 bg-white text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-100 outline-none transition-all font-black text-2xl text-center"
-                    style={{ colorScheme: 'light' }}
+                    className="w-full p-4 rounded-xl border-2 border-gray-300 bg-white text-gray-900 focus:border-red-600 focus:ring-2 focus:ring-red-100 outline-none transition-all font-black text-2xl text-center appearance-none cursor-pointer"
                     required
-                  />
+                  >
+                    <option value="" disabled>Choisir l'heure</option>
+                    {timeSlots.map(slot => (
+                      <option key={slot} value={slot}>{slot.replace(':', 'h')}</option>
+                    ))}
+                  </select>
                   <p className="text-center text-xs text-gray-500 mt-2">Disponível apenas entre 10:15 e 13:30</p>
                 </div>
 
