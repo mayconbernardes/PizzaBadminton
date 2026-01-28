@@ -331,13 +331,9 @@ const App: React.FC = () => {
           <div className="hidden block-print mb-12 text-center pt-8">
             <h1 className="text-4xl font-serif text-gray-900 uppercase">Pizza Walter et Flo</h1>
             <p className="text-gray-600 uppercase tracking-widest text-sm">Menu Artisanal</p>
-            {isPizzeriaOpen() ? (
-              <div className="mt-4 text-red-600 font-bold text-xl">
-                <a href={`tel:${SMS_PHONE}`} className="hover:underline">{CONTACT_PHONE}</a>
-              </div>
-            ) : (
-              <div className="mt-4 text-gray-500 font-bold text-lg italic">Pizzeria Fermée</div>
-            )}
+            <div className="mt-4 text-red-600 font-bold text-xl">
+              <a href={`tel:${SMS_PHONE}`} className="hover:underline">{CONTACT_PHONE}</a>
+            </div>
           </div>
 
           {/* Pizza Section */}
@@ -465,13 +461,9 @@ const App: React.FC = () => {
             <h4 className="text-xl font-bold mb-6 flex items-center justify-center md:justify-start">
               <i className="fas fa-phone-alt mr-3 text-red-500"></i> Contact
             </h4>
-            {isPizzeriaOpen() ? (
-              <div className="text-3xl font-black text-red-500 hover:text-red-400 transition-colors">
-                <a href={`tel:${SMS_PHONE}`}>{CONTACT_PHONE}</a>
-              </div>
-            ) : (
-              <div className="text-xl font-bold text-gray-500 italic">Actuellement Fermé</div>
-            )}
+            <div className="text-3xl font-black text-red-500 hover:text-red-400 transition-colors">
+              <a href={`tel:${SMS_PHONE}`}>{CONTACT_PHONE}</a>
+            </div>
           </div>
         </div>
       </footer>
@@ -493,26 +485,22 @@ const App: React.FC = () => {
         </button>
 
         {/* Floating WhatsApp Contact Button */}
-        {isPizzeriaOpen() && (
-          <>
-            <a
-              href={`sms:${SMS_PHONE}`}
-              className="bg-blue-500 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
-              title="Contactez-nous par SMS"
-            >
-              <i className="fas fa-comment-dots text-2xl"></i>
-            </a>
-            <a
-              href={WHATSAPP_BASE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
-              title="Contactez-nous sur WhatsApp"
-            >
-              <i className="fab fa-whatsapp text-3xl"></i>
-            </a>
-          </>
-        )}
+        <a
+          href={`sms:${SMS_PHONE}`}
+          className="bg-blue-500 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
+          title="Contactez-nous par SMS"
+        >
+          <i className="fas fa-comment-dots text-2xl"></i>
+        </a>
+        <a
+          href={WHATSAPP_BASE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-green-500 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
+          title="Contactez-nous sur WhatsApp"
+        >
+          <i className="fab fa-whatsapp text-3xl"></i>
+        </a>
       </div>
 
       <style>{`
