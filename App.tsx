@@ -229,7 +229,7 @@ const App: React.FC = () => {
       )}
 
       {/* Header / Hero */}
-      <header className="relative h-[60vh] flex items-center justify-center overflow-hidden no-print">
+      <header className="relative min-h-[75vh] py-12 flex items-center justify-center overflow-hidden no-print">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop"
